@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pandas
+numpy
+scipy
+xarray
+cfgrib
+scikit-learn
+shapely
+geopandas
+fastparquet
+pyarrow
+networkx
+pytest
+httpx
