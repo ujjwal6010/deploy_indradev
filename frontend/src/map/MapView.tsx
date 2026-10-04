@@ -22,13 +22,13 @@ const MEMBER_COLORS: Record<string, string> = {
 
 export default function MapView({ forecastState, scenarios, selectedScenarioId, showSpaghetti = false }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<maplibregl.Map | null>(null);
+  const mapRef = useRef<any | null>(null);
   const [allTracks, setAllTracks] = useState<TrackPoint[]>([]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
-    mapRef.current = new maplibregl.Map({
+    mapRef.current = new (maplibregl as any).Map({
       container: containerRef.current,
       style: {
         version: 8,
@@ -140,7 +140,7 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
         paint: { 'line-color': ['get', 'color'], 'line-width': 2, 'line-opacity': 0.5, 'line-dasharray': [3, 2] },
       });
 
-      map.addControl(new maplibregl.NavigationControl(), 'top-right');
+      map.addControl(new (maplibregl as any).NavigationControl(), 'top-right');
     });
 
     return () => { mapRef.current?.remove(); mapRef.current = null; };
@@ -184,7 +184,7 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
           member: evt.member,
         },
       }));
-      (map.getSource('footprints') as maplibregl.GeoJSONSource)?.setData({
+      (map.getSource('footprints') as any)?.setData({
         type: 'FeatureCollection',
         features: footprintFeatures,
       });
@@ -199,7 +199,7 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
           member: evt.member,
         },
       }));
-      (map.getSource('centroids') as maplibregl.GeoJSONSource)?.setData({
+      (map.getSource('centroids') as any)?.setData({
         type: 'FeatureCollection',
         features: centroidFeatures,
       });
@@ -230,7 +230,7 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
       };
     }) ?? [];
 
-    (map.getSource('scenario-halos') as maplibregl.GeoJSONSource)?.setData({
+    (map.getSource('scenario-halos') as any)?.setData({
       type: 'FeatureCollection',
       features: haloFeatures,
     });
@@ -251,12 +251,12 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
           },
         };
       });
-      (map.getSource('tracks') as maplibregl.GeoJSONSource)?.setData({
+      (map.getSource('tracks') as any)?.setData({
         type: 'FeatureCollection',
         features: trackFeatures,
       });
     } else {
-      (map.getSource('tracks') as maplibregl.GeoJSONSource)?.setData({
+      (map.getSource('tracks') as any)?.setData({
         type: 'FeatureCollection',
         features: [],
       });
