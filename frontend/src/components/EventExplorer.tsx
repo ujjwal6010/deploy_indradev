@@ -5,8 +5,8 @@ import type { ExtremeEvent, TrackPoint } from '../types';
 import { FORECAST_HOURS } from '../types';
 
 const MEMBER_COLORS: Record<string, string> = {
-  gep01: '#f97316', gep02: '#3b82f6', gep03: '#22c55e',
-  gep04: '#a855f7', gep05: '#ec4899',
+  gep01: '#f97316', gep02: '#0071e3', gep03: '#34c759',
+  gep04: '#af52de', gep05: '#ff2d55',
 };
 
 const ALL_MEMBERS = ['gep01', 'gep02', 'gep03', 'gep04', 'gep05'];
@@ -56,27 +56,27 @@ export default function EventExplorer({ currentHour, onHourChange }: EventExplor
       xAxis: {
         type: 'category',
         data: memberTrack.map(t => `T+${t.forecast_hour}`),
-        axisLabel: { color: '#94a3b8', fontSize: 9 },
-        axisLine: { lineStyle: { color: '#1e3a5f' } }
+        axisLabel: { color: '#6e6e73', fontSize: 9 },
+        axisLine: { lineStyle: { color: '#e5e5ea' } }
       },
       yAxis: {
         type: 'value', name: 'mm/24h',
-        nameTextStyle: { color: '#475569', fontSize: 9 },
-        splitLine: { lineStyle: { color: '#1e3a5f', type: 'dashed' } },
-        axisLabel: { color: '#94a3b8', fontSize: 9 }
+        nameTextStyle: { color: '#aeaeb2', fontSize: 9 },
+        splitLine: { lineStyle: { color: '#f0f0f2', type: 'dashed' } },
+        axisLabel: { color: '#6e6e73', fontSize: 9 }
       },
       series: [
         {
           name: 'Peak',
           type: 'line', smooth: true,
           data: memberTrack.map(t => t.max_intensity),
-          itemStyle: { color: MEMBER_COLORS[selectedEvent.member] || '#fff' },
+          itemStyle: { color: MEMBER_COLORS[selectedEvent.member] || '#6e6e73' },
           areaStyle: {
             color: {
               type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: (MEMBER_COLORS[selectedEvent.member] || '#fff') + '66' },
-                { offset: 1, color: (MEMBER_COLORS[selectedEvent.member] || '#fff') + '00' }
+                { offset: 0, color: (MEMBER_COLORS[selectedEvent.member] || '#6e6e73') + '33' },
+                { offset: 1, color: (MEMBER_COLORS[selectedEvent.member] || '#6e6e73') + '00' }
               ]
             }
           }
@@ -85,7 +85,7 @@ export default function EventExplorer({ currentHour, onHourChange }: EventExplor
           name: 'Mean',
           type: 'line', smooth: true,
           data: memberTrack.map(t => t.mean_intensity),
-          itemStyle: { color: '#475569' },
+          itemStyle: { color: '#aeaeb2' },
           lineStyle: { type: 'dashed', width: 1.5 }
         }
       ]
@@ -97,18 +97,18 @@ export default function EventExplorer({ currentHour, onHourChange }: EventExplor
       {/* left: filters + event list */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* filters row */}
-        <div className="flex items-center gap-3 px-3 py-2 border-b border-[#1e3a5f] shrink-0">
+        <div className="flex items-center gap-3 px-3 py-2 border-b border-[#e5e5ea] shrink-0">
           <div className="flex items-center gap-1">
-            <span className="text-[9px] text-[#475569] uppercase mr-1">Member:</span>
+            <span className="text-[9px] text-[#aeaeb2] uppercase mr-1 font-medium">Member:</span>
             <button
               onClick={() => setMemberFilter(null)}
-              className={`text-[9px] px-1.5 py-0.5 rounded border ${!memberFilter ? 'bg-blue-900/40 border-blue-500/50 text-blue-300' : 'border-[#1e3a5f] text-[#475569] hover:text-[#94a3b8]'}`}
+              className={`text-[9px] px-1.5 py-0.5 rounded-md border font-medium ${!memberFilter ? 'bg-[#e8f4fd] border-[#0071e3]/30 text-[#0071e3]' : 'border-[#e5e5ea] text-[#aeaeb2] hover:text-[#6e6e73]'}`}
             >All</button>
             {ALL_MEMBERS.map(m => (
               <button
                 key={m}
                 onClick={() => setMemberFilter(memberFilter === m ? null : m)}
-                className={`text-[9px] px-1.5 py-0.5 rounded border ${memberFilter === m ? 'bg-blue-900/40 border-blue-500/50 text-blue-300' : 'border-[#1e3a5f] text-[#475569] hover:text-[#94a3b8]'}`}
+                className={`text-[9px] px-1.5 py-0.5 rounded-md border font-medium ${memberFilter === m ? 'bg-[#e8f4fd] border-[#0071e3]/30 text-[#0071e3]' : 'border-[#e5e5ea] text-[#aeaeb2] hover:text-[#6e6e73]'}`}
               >
                 <span className="inline-block w-1.5 h-1.5 rounded-full mr-0.5" style={{ background: MEMBER_COLORS[m] }} />
                 {m.slice(-2)}
@@ -116,20 +116,20 @@ export default function EventExplorer({ currentHour, onHourChange }: EventExplor
             ))}
           </div>
           <div className="flex items-center gap-1">
-            <span className="text-[9px] text-[#475569] uppercase mr-1">Hour:</span>
+            <span className="text-[9px] text-[#aeaeb2] uppercase mr-1 font-medium">Hour:</span>
             <button
               onClick={() => setHourFilter(null)}
-              className={`text-[9px] px-1.5 py-0.5 rounded border ${hourFilter === null ? 'bg-blue-900/40 border-blue-500/50 text-blue-300' : 'border-[#1e3a5f] text-[#475569] hover:text-[#94a3b8]'}`}
+              className={`text-[9px] px-1.5 py-0.5 rounded-md border font-medium ${hourFilter === null ? 'bg-[#e8f4fd] border-[#0071e3]/30 text-[#0071e3]' : 'border-[#e5e5ea] text-[#aeaeb2] hover:text-[#6e6e73]'}`}
             >All</button>
             {FORECAST_HOURS.map(h => (
               <button
                 key={h}
                 onClick={() => setHourFilter(hourFilter === h ? null : h)}
-                className={`text-[9px] px-1 py-0.5 rounded border mono ${hourFilter === h ? 'bg-blue-900/40 border-blue-500/50 text-blue-300' : 'border-[#1e3a5f] text-[#475569] hover:text-[#94a3b8]'}`}
+                className={`text-[9px] px-1 py-0.5 rounded-md border mono font-medium ${hourFilter === h ? 'bg-[#e8f4fd] border-[#0071e3]/30 text-[#0071e3]' : 'border-[#e5e5ea] text-[#aeaeb2] hover:text-[#6e6e73]'}`}
               >{h}</button>
             ))}
           </div>
-          <div className="text-[9px] text-[#475569] ml-auto mono">{filtered.length} events</div>
+          <div className="text-[9px] text-[#aeaeb2] ml-auto mono">{filtered.length} events</div>
         </div>
 
         {/* event cards */}
@@ -141,18 +141,18 @@ export default function EventExplorer({ currentHour, onHourChange }: EventExplor
                 <button
                   key={evt.event_id}
                   onClick={() => setSelectedEvent(isSelected ? null : evt)}
-                  className={`text-left bg-[#060d1a] border rounded p-2 transition-all ${
-                    isSelected ? 'border-blue-500/60 ring-1 ring-blue-500/30' : 'border-[#1e3a5f] hover:border-[#2e5a8f]'
+                  className={`text-left bg-[#f5f5f7] border rounded-xl p-2.5 transition-all ${
+                    isSelected ? 'border-[#0071e3]/40 ring-1 ring-[#0071e3]/20 bg-white shadow-sm' : 'border-[#e5e5ea] hover:border-[#d1d1d6] hover:bg-white'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[9px] text-[#475569] mono">#{String(evt.displayNum).padStart(3, '0')}</span>
-                    <span className="text-[9px] mono" style={{ color: MEMBER_COLORS[evt.member] }}>{evt.member}</span>
+                    <span className="text-[9px] text-[#aeaeb2] mono">#{String(evt.displayNum).padStart(3, '0')}</span>
+                    <span className="text-[9px] mono font-medium" style={{ color: MEMBER_COLORS[evt.member] }}>{evt.member}</span>
                   </div>
-                  <div className="text-xs mono text-white font-medium">{evt.max_intensity.toFixed(0)} mm</div>
+                  <div className="text-xs mono text-[#1d1d1f] font-medium">{evt.max_intensity.toFixed(0)} mm</div>
                   <div className="flex items-center justify-between mt-1">
-                    <span className="text-[9px] text-[#475569]">T+{evt.forecast_hour}</span>
-                    <span className="text-[9px] text-[#475569]">{evt.area.toFixed(0)} cells</span>
+                    <span className="text-[9px] text-[#aeaeb2]">T+{evt.forecast_hour}</span>
+                    <span className="text-[9px] text-[#aeaeb2]">{evt.area.toFixed(0)} cells</span>
                   </div>
                 </button>
               );
@@ -163,13 +163,13 @@ export default function EventExplorer({ currentHour, onHourChange }: EventExplor
 
       {/* right: detail panel when event selected */}
       {selectedEvent && (
-        <div className="w-64 border-l border-[#1e3a5f] bg-[#0a1422] flex flex-col overflow-y-auto shrink-0">
-          <div className="p-3 border-b border-[#1e3a5f]">
+        <div className="w-64 border-l border-[#e5e5ea] bg-white flex flex-col overflow-y-auto shrink-0">
+          <div className="p-3 border-b border-[#e5e5ea]">
             <div className="flex items-center justify-between">
-              <div className="text-[10px] text-[#475569] uppercase tracking-widest">Event Detail</div>
-              <button onClick={() => setSelectedEvent(null)} className="text-[#475569] hover:text-white text-sm">×</button>
+              <div className="text-[10px] text-[#aeaeb2] uppercase tracking-widest font-medium">Event Detail</div>
+              <button onClick={() => setSelectedEvent(null)} className="text-[#aeaeb2] hover:text-[#1d1d1f] text-sm transition-colors">×</button>
             </div>
-            <div className="text-sm mono text-white font-semibold mt-1">{selectedEvent.event_id}</div>
+            <div className="text-sm mono text-[#1d1d1f] font-semibold mt-1">{selectedEvent.event_id}</div>
           </div>
 
           <div className="p-3 space-y-3">
@@ -182,9 +182,9 @@ export default function EventExplorer({ currentHour, onHourChange }: EventExplor
                 { label: 'Area', value: `${selectedEvent.area.toFixed(0)} cells` },
                 { label: 'Location', value: `${selectedEvent.latitude_centroid.toFixed(1)}°N ${selectedEvent.longitude_centroid.toFixed(1)}°E` },
               ].map(({ label, value, color }) => (
-                <div key={label} className="bg-[#0d1829] rounded p-1.5 border border-[#1e3a5f]">
-                  <div className="text-[9px] text-[#475569] uppercase">{label}</div>
-                  <div className="text-[11px] text-white mono mt-0.5" style={color ? { color } : undefined}>{value}</div>
+                <div key={label} className="bg-[#f5f5f7] rounded-xl p-2 border border-[#e5e5ea]">
+                  <div className="text-[9px] text-[#aeaeb2] uppercase">{label}</div>
+                  <div className="text-[11px] text-[#1d1d1f] mono mt-0.5 font-medium" style={color ? { color } : undefined}>{value}</div>
                 </div>
               ))}
             </div>
@@ -192,10 +192,10 @@ export default function EventExplorer({ currentHour, onHourChange }: EventExplor
             {/* evolution across forecast hours */}
             {evolutionOption && (
               <div>
-                <div className="text-[10px] text-[#94a3b8] uppercase tracking-widest mb-1">
+                <div className="text-[10px] text-[#6e6e73] uppercase tracking-widest mb-1 font-medium">
                   {selectedEvent.member} — Intensity Evolution
                 </div>
-                <div className="bg-[#0d1829] rounded border border-[#1e3a5f] p-1">
+                <div className="bg-[#f5f5f7] rounded-xl border border-[#e5e5ea] p-1">
                   <ReactECharts option={evolutionOption} style={{ height: '120px', width: '100%' }} />
                 </div>
               </div>
@@ -203,7 +203,7 @@ export default function EventExplorer({ currentHour, onHourChange }: EventExplor
 
             <button
               onClick={() => { onHourChange(selectedEvent.forecast_hour); }}
-              className="w-full text-[10px] py-1.5 rounded border border-blue-500/40 text-blue-300 hover:bg-blue-900/30 transition-colors uppercase tracking-widest"
+              className="w-full text-[10px] py-2 rounded-xl border border-[#0071e3]/30 text-[#0071e3] hover:bg-[#e8f4fd] transition-colors uppercase tracking-widest font-medium"
             >
               Jump to T+{selectedEvent.forecast_hour} on map
             </button>

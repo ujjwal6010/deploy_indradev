@@ -18,9 +18,9 @@ export default function TrajectoryChart({ trajectory }: TrajectoryChartProps) {
 
   const series = Object.keys(memberTracks).map(m => {
     const color = {
-      gep01: '#f97316', gep02: '#3b82f6', gep03: '#22c55e',
-      gep04: '#a855f7', gep05: '#ec4899',
-    }[m] || '#ffffff';
+      gep01: '#f97316', gep02: '#0071e3', gep03: '#34c759',
+      gep04: '#af52de', gep05: '#ff2d55',
+    }[m] || '#6e6e73';
 
     return {
       name: m,
@@ -49,25 +49,25 @@ export default function TrajectoryChart({ trajectory }: TrajectoryChartProps) {
       type: 'value',
       name: 'Lon',
       scale: true,
-      nameTextStyle: { color: '#475569', fontSize: 10 },
-      axisLabel: { color: '#94a3b8', fontSize: 10 },
-      splitLine: { lineStyle: { color: '#1e3a5f', type: 'dashed' } }
+      nameTextStyle: { color: '#aeaeb2', fontSize: 10 },
+      axisLabel: { color: '#6e6e73', fontSize: 10 },
+      splitLine: { lineStyle: { color: '#f0f0f2', type: 'dashed' } }
     },
     yAxis: {
       type: 'value',
       name: 'Lat',
       scale: true,
-      nameTextStyle: { color: '#475569', fontSize: 10 },
-      axisLabel: { color: '#94a3b8', fontSize: 10 },
-      splitLine: { lineStyle: { color: '#1e3a5f', type: 'dashed' } }
+      nameTextStyle: { color: '#aeaeb2', fontSize: 10 },
+      axisLabel: { color: '#6e6e73', fontSize: 10 },
+      splitLine: { lineStyle: { color: '#f0f0f2', type: 'dashed' } }
     },
     series
   };
 
   return (
     <div className="mt-4">
-      <div className="text-xs text-[#94a3b8] uppercase tracking-widest mb-2">Trajectory Path</div>
-      <div className="bg-[#0d1829] rounded border border-[#1e3a5f] p-2">
+      <div className="text-xs text-[#6e6e73] uppercase tracking-widest mb-2 font-medium">Trajectory Path</div>
+      <div className="bg-[#f5f5f7] rounded-xl border border-[#e5e5ea] p-2">
         <ReactECharts option={option} style={{ height: '180px', width: '100%' }} />
       </div>
     </div>

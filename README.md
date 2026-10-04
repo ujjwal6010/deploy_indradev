@@ -191,7 +191,7 @@ To run the pipeline on real data:
 | **Data Storage** | Apache Parquet |
 | **Frontend** | React 19, TypeScript, Vite, Tailwind CSS |
 | **Maps & Charts** | MapLibre GL JS, Apache ECharts |
-| **Styling** | Glass-morphism UI with Framer Motion animations |
+| **Styling** | Minimalist Light Theme (Cloudflare-inspired), Tailwind CSS, Framer Motion |
 
 ---
 

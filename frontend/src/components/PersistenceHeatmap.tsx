@@ -37,13 +37,13 @@ export default function PersistenceHeatmap({ scenario, trajectory }: Persistence
     xAxis: {
       type: 'category',
       data: hours.map(h => `T+${h}`),
-      axisLabel: { color: '#94a3b8', fontSize: 10 },
-      splitArea: { show: true, areaStyle: { color: ['rgba(255,255,255,0.02)', 'rgba(255,255,255,0.05)'] } }
+      axisLabel: { color: '#6e6e73', fontSize: 10 },
+      splitArea: { show: true, areaStyle: { color: ['rgba(0,0,0,0.01)', 'rgba(0,0,0,0.03)'] } }
     },
     yAxis: {
       type: 'category',
       data: members,
-      axisLabel: { color: '#94a3b8', fontSize: 10 },
+      axisLabel: { color: '#6e6e73', fontSize: 10 },
       splitArea: { show: true }
     },
     visualMap: {
@@ -55,22 +55,22 @@ export default function PersistenceHeatmap({ scenario, trajectory }: Persistence
       top: 0,
       itemWidth: 10,
       itemHeight: 100,
-      textStyle: { color: '#94a3b8', fontSize: 10 },
-      inRange: { color: ['#0d1829', '#3b82f6', '#f59e0b', '#ef4444'] }
+      textStyle: { color: '#6e6e73', fontSize: 10 },
+      inRange: { color: ['#f5f5f7', '#5ac8fa', '#ff9f0a', '#ff3b30'] }
     },
     series: [{
       name: 'Persistence',
       type: 'heatmap',
       data,
       label: { show: false },
-      emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0, 0, 0, 0.5)' } }
+      emphasis: { itemStyle: { shadowBlur: 8, shadowColor: 'rgba(0, 0, 0, 0.15)' } }
     }]
   };
 
   return (
     <div className="mt-4">
-      <div className="text-xs text-[#94a3b8] uppercase tracking-widest mb-2">Member Persistence</div>
-      <div className="bg-[#0d1829] rounded border border-[#1e3a5f] p-2">
+      <div className="text-xs text-[#6e6e73] uppercase tracking-widest mb-2 font-medium">Member Persistence</div>
+      <div className="bg-[#f5f5f7] rounded-xl border border-[#e5e5ea] p-2">
         <ReactECharts option={option} style={{ height: '180px', width: '100%' }} />
       </div>
     </div>

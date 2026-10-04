@@ -31,6 +31,10 @@ graphify-out/
 .gemini/
 .vscode/
 .idea/
+.user_uploaded/
+.tempmediaStorage/
+scratch/
+.venv/
 
 # OS & Logs
 .DS_Store

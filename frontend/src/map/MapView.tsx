@@ -14,8 +14,8 @@ interface MapViewProps {
 }
 
 const MEMBER_COLORS: Record<string, string> = {
-  gep01: '#f97316', gep02: '#3b82f6', gep03: '#22c55e',
-  gep04: '#a855f7', gep05: '#ec4899',
+  gep01: '#f97316', gep02: '#0071e3', gep03: '#34c759',
+  gep04: '#af52de', gep05: '#ff2d55',
 };
 
 // Study region bounds: 5N–38N, 65E–100E
@@ -40,8 +40,8 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
             tileSize: 256,
           }
         },
-        layers: [{ id: 'osm', type: 'raster', source: 'osm', paint: { 'raster-opacity': 0.15 } }],
-        background: { type: 'background', paint: { 'background-color': '#060d1a' } } as any,
+        layers: [{ id: 'osm', type: 'raster', source: 'osm', paint: { 'raster-opacity': 0.45, 'raster-saturation': -0.3 } }],
+        background: { type: 'background', paint: { 'background-color': '#f5f5f7' } } as any,
       },
       center: [82, 20],
       zoom: 4.5,
@@ -67,13 +67,13 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
         id: 'study-region-fill',
         type: 'fill',
         source: 'study-region',
-        paint: { 'fill-color': '#3b82f6', 'fill-opacity': 0.03 },
+        paint: { 'fill-color': '#0071e3', 'fill-opacity': 0.03 },
       });
       map.addLayer({
         id: 'study-region-border',
         type: 'line',
         source: 'study-region',
-        paint: { 'line-color': '#3b82f6', 'line-width': 1, 'line-dasharray': [4, 4], 'line-opacity': 0.5 },
+        paint: { 'line-color': '#0071e3', 'line-width': 1, 'line-dasharray': [4, 4], 'line-opacity': 0.35 },
       });
 
       // Track lines source (updated dynamically)
@@ -107,7 +107,7 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
         paint: {
           'line-color': ['get', 'color'],
           'line-width': 1,
-          'line-opacity': 0.8,
+          'line-opacity': 0.6,
         },
       });
 
@@ -123,7 +123,7 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
           'circle-opacity': ['get', 'opacity'],
           'circle-stroke-width': 2,
           'circle-stroke-color': '#ffffff',
-          'circle-stroke-opacity': 0.6,
+          'circle-stroke-opacity': 0.9,
         },
       });
 
@@ -133,13 +133,13 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
         id: 'scenario-halo-fill',
         type: 'fill',
         source: 'scenario-halos',
-        paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.07 },
+        paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.08 },
       });
       map.addLayer({
         id: 'scenario-halo-border',
         type: 'line',
         source: 'scenario-halos',
-        paint: { 'line-color': ['get', 'color'], 'line-width': 2, 'line-opacity': 0.7, 'line-dasharray': [3, 2] },
+        paint: { 'line-color': ['get', 'color'], 'line-width': 2, 'line-opacity': 0.5, 'line-dasharray': [3, 2] },
       });
 
       map.addControl(new maplibregl.NavigationControl(), 'top-right');
@@ -181,8 +181,8 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
           ]],
         },
         properties: {
-          color: MEMBER_COLORS[evt.member] ?? '#ffffff',
-          opacity: getOpacity(evt.member) * 0.25,
+          color: MEMBER_COLORS[evt.member] ?? '#6e6e73',
+          opacity: getOpacity(evt.member) * 0.2,
           member: evt.member,
         },
       }));
@@ -196,7 +196,7 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
         type: 'Feature' as const,
         geometry: { type: 'Point' as const, coordinates: [evt.longitude_centroid, evt.latitude_centroid] },
         properties: {
-          color: MEMBER_COLORS[evt.member] ?? '#ffffff',
+          color: MEMBER_COLORS[evt.member] ?? '#6e6e73',
           opacity: getOpacity(evt.member),
           member: evt.member,
         },
@@ -224,7 +224,7 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
       });
       points.push(points[0]);
 
-      const color = i === 0 ? '#22c55e' : '#f59e0b';
+      const color = i === 0 ? '#34c759' : '#ff9f0a';
       return {
         type: 'Feature' as const,
         geometry: { type: 'Polygon' as const, coordinates: [points] },
@@ -270,25 +270,25 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
     <div className="relative w-full h-full">
       <div ref={containerRef} className="map-container" />
 
-      {/* TODO: make legend dynamic later */}
-      <div className="absolute bottom-4 left-4 glass rounded-lg p-3 text-xs space-y-1.5">
-        <div className="text-[#94a3b8] font-semibold uppercase tracking-widest text-[10px] mb-2">Members</div>
+      {/* Legend */}
+      <div className="absolute bottom-4 left-4 glass rounded-2xl p-3.5 text-xs space-y-1.5">
+        <div className="text-[#1d1d1f] font-semibold uppercase tracking-widest text-[10px] mb-2">Members</div>
         {MEMBERS.map(m => (
           <div key={m.id} className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full" style={{ background: m.color }} />
-            <span className="text-[#94a3b8]">{m.label}</span>
+            <span className="text-[#6e6e73]">{m.label}</span>
           </div>
         ))}
-        <div className="border-t border-[#1e3a5f] pt-2 mt-2">
+        <div className="border-t border-[#e5e5ea] pt-2 mt-2">
           <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full border border-[#22c55e]" style={{ background: 'rgba(34,197,94,0.2)' }} />
-            <span className="text-[#94a3b8]">Scenario group</span>
+            <div className="w-2.5 h-2.5 rounded-full border border-[#34c759]" style={{ background: 'rgba(52,199,89,0.15)' }} />
+            <span className="text-[#6e6e73]">Scenario group</span>
           </div>
         </div>
       </div>
 
       {/* Study region label */}
-      <div className="absolute top-4 left-4 glass rounded-md px-2 py-1 text-[10px] text-[#94a3b8] uppercase tracking-widest">
+      <div className="absolute top-4 left-4 glass rounded-xl px-3 py-1.5 text-[10px] text-[#6e6e73] uppercase tracking-widest font-medium">
         Study Region · 5°N–38°N · 65°E–100°E
       </div>
     </div>

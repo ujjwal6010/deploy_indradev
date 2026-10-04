@@ -18,15 +18,15 @@ export default function IntensityChart({ trajectory }: IntensityChartProps) {
     xAxis: {
       type: 'category',
       data: hours,
-      axisLabel: { color: '#94a3b8', fontSize: 10 },
-      axisLine: { lineStyle: { color: '#1e3a5f' } }
+      axisLabel: { color: '#6e6e73', fontSize: 10 },
+      axisLine: { lineStyle: { color: '#e5e5ea' } }
     },
     yAxis: {
       type: 'value',
       name: 'mm/24h',
-      nameTextStyle: { color: '#475569', fontSize: 10 },
-      splitLine: { lineStyle: { color: '#1e3a5f', type: 'dashed' } },
-      axisLabel: { color: '#94a3b8', fontSize: 10 }
+      nameTextStyle: { color: '#aeaeb2', fontSize: 10 },
+      splitLine: { lineStyle: { color: '#f0f0f2', type: 'dashed' } },
+      axisLabel: { color: '#6e6e73', fontSize: 10 }
     },
     series: [
       {
@@ -34,12 +34,12 @@ export default function IntensityChart({ trajectory }: IntensityChartProps) {
         type: 'line',
         data: maxIntensities,
         smooth: true,
-        itemStyle: { color: '#f59e0b' },
+        itemStyle: { color: '#ff9f0a' },
         lineStyle: { width: 2 },
         areaStyle: {
           color: {
             type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
-            colorStops: [{ offset: 0, color: 'rgba(245, 158, 11, 0.4)' }, { offset: 1, color: 'rgba(245, 158, 11, 0)' }]
+            colorStops: [{ offset: 0, color: 'rgba(255, 159, 10, 0.2)' }, { offset: 1, color: 'rgba(255, 159, 10, 0)' }]
           }
         }
       },
@@ -48,7 +48,7 @@ export default function IntensityChart({ trajectory }: IntensityChartProps) {
         type: 'line',
         data: meanIntensities,
         smooth: true,
-        itemStyle: { color: '#3b82f6' },
+        itemStyle: { color: '#0071e3' },
         lineStyle: { width: 2 }
       }
     ]
@@ -56,8 +56,8 @@ export default function IntensityChart({ trajectory }: IntensityChartProps) {
 
   return (
     <div className="mt-4">
-      <div className="text-xs text-[#94a3b8] uppercase tracking-widest mb-2">Intensity Evolution</div>
-      <div className="bg-[#0d1829] rounded border border-[#1e3a5f] p-2">
+      <div className="text-xs text-[#6e6e73] uppercase tracking-widest mb-2 font-medium">Intensity Evolution</div>
+      <div className="bg-[#f5f5f7] rounded-xl border border-[#e5e5ea] p-2">
         <ReactECharts option={option} style={{ height: '180px', width: '100%' }} />
       </div>
     </div>

@@ -1,15 +1,17 @@
+/* App-level overrides – light theme */
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
-  border-radius: 5px;
+  border-radius: 8px;
   color: var(--accent);
-  background: var(--accent-bg);
+  background: var(--accent-light);
   border: 2px solid transparent;
   transition: border-color 0.3s;
   margin-bottom: 24px;
 
   &:hover {
-    border-color: var(--accent-border);
+    border-color: var(--accent);
   }
   &:focus-visible {
     outline: 2px solid var(--accent);
@@ -116,10 +118,10 @@
   }
 
   a {
-    color: var(--text-h);
+    color: var(--text-primary);
     font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
+    border-radius: 8px;
+    background: var(--bg-card);
     display: flex;
     padding: 6px 12px;
     align-items: center;
@@ -128,7 +130,7 @@
     transition: box-shadow 0.3s;
 
     &:hover {
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-md);
     }
     .button-icon {
       height: 18px;

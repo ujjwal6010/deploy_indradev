@@ -9,17 +9,17 @@ interface RobustnessMatrixProps {
 }
 
 function getCellColor(cell: RobustnessCell | undefined): string {
-  if (!cell || cell.scenario_count === 0) return 'bg-[#0d1829] border-[#1e3a5f]';
-  if (cell.has_persistent) return 'bg-green-900/40 border-green-500/40';
-  if (cell.max_timesteps >= 2) return 'bg-amber-900/40 border-amber-500/40';
-  return 'bg-blue-900/40 border-blue-500/40';
+  if (!cell || cell.scenario_count === 0) return 'bg-[#f0f0f4]';
+  if (cell.has_persistent) return 'bg-[#dcf5e3]';
+  if (cell.max_timesteps >= 2) return 'bg-[#ffe8cc]';
+  return 'bg-[#d6ebff]';
 }
 
 function getDotColor(cell: RobustnessCell | undefined): string {
-  if (!cell || cell.scenario_count === 0) return '';
-  if (cell.has_persistent) return 'bg-green-400';
-  if (cell.max_timesteps >= 2) return 'bg-amber-400';
-  return 'bg-blue-400';
+  if (!cell || cell.scenario_count === 0) return 'bg-[#b0b0b8]';
+  if (cell.has_persistent) return 'bg-[#34c759]';
+  if (cell.max_timesteps >= 2) return 'bg-[#ff9f0a]';
+  return 'bg-[#0071e3]';
 }
 
 export default function RobustnessMatrix({ matrix, onCellClick, selectedHour, selectedScale }: RobustnessMatrixProps) {
@@ -28,54 +28,60 @@ export default function RobustnessMatrix({ matrix, onCellClick, selectedHour, se
 
   return (
     <div className="p-4">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-xs text-[#94a3b8] uppercase tracking-widest font-semibold">
-          Scale Robustness Matrix
-        </h3>
-        <div className="flex items-center gap-3 text-[10px] text-[#475569]">
-          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-green-400/60 inline-block" /> Persistent</span>
-          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-amber-400/60 inline-block" /> Emerging</span>
-          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-blue-400/60 inline-block" /> Transient</span>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-1.5">
+          <h3 className="text-[13px] text-[#1d2b45] uppercase tracking-widest font-bold">
+            Scale Robustness Matrix
+          </h3>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </div>
+        <div className="flex items-center gap-4 text-[12px] text-[#4b5563]">
+          <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#34c759]" /> Persistent</span>
+          <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#ff9f0a]" /> Emerging</span>
+          <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#0071e3]" /> Transient</span>
         </div>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-[11px]">
-          <thead>
-            <tr>
-              <th className="text-left text-[#475569] pr-3 pb-2 font-normal">T+hr</th>
-              {SCALES_KM.map(s => (
-                <th key={s} className="text-center text-[#475569] pb-2 font-normal">{s} km</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {FORECAST_HOURS.map(fh => (
-              <tr key={fh}>
-                <td className={`pr-3 py-0.5 mono font-medium ${fh === selectedHour ? 'text-blue-400' : 'text-[#94a3b8]'}`}>
-                  T+{fh}
-                </td>
-                {SCALES_KM.map(scale => {
-                  const cell = getCell(fh, scale);
-                  const isSelected = fh === selectedHour && scale === selectedScale;
-                  return (
-                    <td key={scale} className="py-0.5 px-1 text-center">
-                      <button
-                        onClick={() => onCellClick(fh, scale)}
-                        title={cell ? `${cell.scenario_count} scenarios, max ${cell.max_timesteps} steps` : 'No scenarios'}
-                        className={`matrix-cell w-8 h-6 rounded border ${getCellColor(cell)} ${isSelected ? 'ring-1 ring-white/40' : ''} flex items-center justify-center mx-auto`}
-                      >
-                        {cell && cell.scenario_count > 0 && (
-                          <div className={`w-2 h-2 rounded-full ${getDotColor(cell)}`} />
-                        )}
-                      </button>
-                    </td>
-                  );
-                })}
+        <div className="border border-[#e5e5ea] rounded-xl overflow-hidden bg-white shadow-sm">
+          <table className="w-full text-[12px] border-collapse">
+            <thead>
+              <tr className="bg-[#f8f9fa] border-b border-[#e5e5ea]">
+                <th className="text-left font-medium text-[#6e6e73] py-2.5 px-4 border-r border-[#e5e5ea] w-32">Lead Time</th>
+                {SCALES_KM.map(s => (
+                  <th key={s} className="font-medium text-[#6e6e73] py-2.5 px-4 border-r border-[#e5e5ea] last:border-r-0 text-center">{s} km</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {FORECAST_HOURS.map(fh => (
+                <tr key={fh} className="border-b border-[#e5e5ea] last:border-b-0">
+                  <td className="py-2.5 px-4 border-r border-[#e5e5ea] font-bold text-[#1d3a8f] bg-[#fcfcfd]">
+                    T+{fh}
+                  </td>
+                  {SCALES_KM.map(scale => {
+                    const cell = getCell(fh, scale);
+                    const isSelected = fh === selectedHour && scale === selectedScale;
+                    return (
+                      <td 
+                        key={scale} 
+                        className="py-2 px-4 border-r border-[#e5e5ea] last:border-r-0 text-center bg-white hover:bg-[#f5f5f7] transition-colors cursor-pointer" 
+                        onClick={() => onCellClick(fh, scale)}
+                      >
+                        <div
+                          title={cell ? `${cell.scenario_count} scenarios, max ${cell.max_timesteps} steps` : 'No scenarios'}
+                          className={`w-9 h-5 rounded-full ${getCellColor(cell)} ${isSelected ? 'ring-2 ring-offset-1 ring-[#0071e3]' : ''} flex items-center justify-center mx-auto`}
+                        >
+                          <div className={`w-2 h-2 rounded-full ${getDotColor(cell)}`} />
+                        </div>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
