@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import * as maplibregl from 'maplibre-gl';
-import 'maplibre-gl/dist/maplibre-gl.css';
+const maplibregl = (window as any).maplibregl;
+
 import type { ForecastState, ScenarioPersistence, TrackPoint } from '../types';
 import { MEMBERS } from '../types';
 import { api } from '../services/api';
