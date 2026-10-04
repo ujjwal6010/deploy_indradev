@@ -9,7 +9,7 @@ interface MapViewProps {
   forecastState: ForecastState | null;
   scenarios: ScenarioPersistence[];
   selectedScenarioId: string | null;
-  onScenarioClick: (id: string) => void;
+  onScenarioClick?: (id: string) => void;
   showSpaghetti?: boolean;
 }
 
@@ -19,9 +19,8 @@ const MEMBER_COLORS: Record<string, string> = {
 };
 
 // Study region bounds: 5N–38N, 65E–100E
-const STUDY_BOUNDS: maplibregl.LngLatBoundsLike = [[65, 5], [100, 38]];
 
-export default function MapView({ forecastState, scenarios, selectedScenarioId, onScenarioClick, showSpaghetti = false }: MapViewProps) {
+export default function MapView({ forecastState, scenarios, selectedScenarioId, showSpaghetti = false }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [allTracks, setAllTracks] = useState<TrackPoint[]>([]);
@@ -41,7 +40,6 @@ export default function MapView({ forecastState, scenarios, selectedScenarioId, 
           }
         },
         layers: [{ id: 'osm', type: 'raster', source: 'osm', paint: { 'raster-opacity': 0.45, 'raster-saturation': -0.3 } }],
-        background: { type: 'background', paint: { 'background-color': '#f5f5f7' } } as any,
       },
       center: [82, 20],
       zoom: 4.5,
