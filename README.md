@@ -11,7 +11,7 @@ A spatio-temporal ensemble intelligence system for extreme precipitation that de
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6)
 
 **Frontend (Live Dashboard):** [https://deploy-indradev.vercel.app](https://deploy-indradev.vercel.app)  
-**Backend API (Live Server):** [https://deploy-indradev.onrender.com/api](https://deploy-indradev.onrender.com/docs)
+**Backend API (Live Server):** [https://deploy-indradev.onrender.com/docs](https://deploy-indradev.onrender.com/docs)
 
 | Field | Details |
 |---|---|
